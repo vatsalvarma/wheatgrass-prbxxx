@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wheatgrass Shot – Shake & Gulp</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #2f3b2f;
+  background: url("Images/buttermilkbackground.png") no-repeat center center fixed;
+  background-size: cover;
+  line-height: 1.6;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+  width: 85%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  background: #f7fbf4;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 28px;
+}
+
+.logo-text {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #2f3b2f;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.order-btn {
+  background: #5c8a5a;
+  color: #fff;
+  padding: 7px 18px;
+  font-size: 14px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.order-btn:hover {
+  background: #4b7448;
+}
+
+/* ================= HERO ================= */
+
+
+
+.hero-left {
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;   /* pushes image to right */
+  padding-right: 20px;         /* small spacing control */
+}.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  padding: 50px 0;
+  min-height: 85vh;
+  transform: translateX(-60px);   /* moves whole hero slightly left */
+}
+
+
+
+
+.hero-right {
+  width: 50%;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.bottle {
+  width: 100%;
+  max-width: 280px;       /* slightly smaller */
+}
+
+/* ================= TEXT ================= */
+
+h1 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 48px;        /* slightly reduced but still large */
+  margin-bottom: 12px;
+}
+
+.tagline {
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #4b5b4b;
+}
+
+.small-label {
+  background: #d7e6d6;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* ================= INGREDIENTS ================= */
+
+.ingredients {
+  display: flex;
+  gap: 20px;              /* reduced spacing */
+  margin: 25px 0;         /* reduced margin */
+  flex-wrap: wrap;
+}
+
+.ingredient {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.ingredient span {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Circle Design */
+
+.circle {
+  width: 70px;            /* reduced */
+  height: 70px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+  transition: all 0.4s ease;
+}
+
+.circle img {
+  width: 38px;            /* reduced */
+  transition: transform 0.4s ease;
+}
+
+/* Hover Effects */
+
+.ingredient:hover img {
+  transform: translateY(-6px);
+}
+
+.ingredient:hover .circle {
+  box-shadow: 0 15px 35px rgba(92,138,90,0.25);
+  transform: translateY(-4px);
+}
+
+/* ================= SPECIAL SECTION ================= */
+
+.special h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 26px;
+  margin-bottom: 15px;
+}
+
+.special p {
+  margin-bottom: 12px;    /* reduced */
+  font-size: 15px;
+  color: #3e4a3e;
+}
+
+/* ================= INFO SECTION ================= */
+
+.info {
+  padding: 70px 0;
+}
+
+.info-block {
+  margin-bottom: 50px;
+}
+
+.info-block h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px 50px;
+}
+
+.tick-list {
+  list-style: none;
+}
+
+.tick-list li {
+  padding-left: 22px;
+  position: relative;
+  font-size: 14px;
+}
+
+.tick-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #5c8a5a;
+}
+
+/* ================= SUGGEST SECTION ================= */
+
+.suggest {
+  padding: 70px 0;
+}
+
+.center-title {
+  text-align: center;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 30px;
+  margin-bottom: 35px;
+}
+
+.center-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card img {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  background: #eef3ea;
+  padding: 60px 0;
+}
+
+.footer-cols {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer strong {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 18px;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width: 900px){
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+
+  .ingredients {
+    justify-content: center;
+  }
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+  body {
+    background: none !important;
+  }
+
+  .container {
+    width: 1100px !important;
+    margin: 0 auto !important;
+  }
+
+  .hero {
+    flex-direction: row !important;
+    min-height: auto;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 50% !important;
+  }
+
+  .header {
+    position: relative !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+@media (max-width: 768px) {
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    min-height: auto;
+    padding: 40px 0;
+  }
+
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+
+  .hero-left {
+    justify-content: center;
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .bottle {
+    max-width: 260px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .tagline {
+    font-size: 16px;
+  }
+
+  .ingredients {
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .center-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-cols {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .hero {
+    padding: 40px 0;
+    gap: 30px;
+  }
+
+  .bottle {
+    max-width: 280px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+
+  .ingredients {
+    gap: 20px;
+  }
+
+  .two-column {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+@media (min-width: 1400px) {
+
+  .container {
+    max-width: 1200px;
+  }
+
+  .bottle {
+    max-width: 350px;
+  }
+
+  h1 {
+    font-size: 52px;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+
+    <div class="logo-wrap">
+      <img src="Images/Shake&Gulp Logo.png" class="logo">
+      <span class="logo-text">Shake & Gulp</span>
+    </div>
+
+    <nav class="nav">
+      <a href="#">Home</a>
+      <a href="#">Our Drinks</a>
+      <a href="#">Articles</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <button class="order-btn">Order Now</button>
+
+  </div>
+</header>
+
+
+<section class="hero container">
+
+  <div class="hero-left">
+    <img src="https://i.ibb.co/wxcnDn5/Wheat-Grass-544x652.png" class="bottle">
+  </div>
+
+  <div class="hero-right">
+    <h1>Wheatgrass Shot</h1>
+    <p class="tagline">Shake the blades. Gulp the cleanse.</p>
+
+    <span class="small-label">INGREDIENTS</span>
+
+    <div class="ingredients">
+
+      <div class="ingredient water">
+        <div class="circle">
+          <img src="Images/download (30).jpeg">
+          <span class="wave"></span>
+        </div>
+        <span>Fresh Wheatgrass Extract</span>
+      </div>
+
+      <div class="ingredient">
+        <div class="circle">
+          <img src="Images/images (3).jpeg">
+        </div>
+        <span>Water</span>
+      </div>
+
+      <div class="ingredient">
+        <div class="circle">
+          <img src="Images/download (20).jpeg">
+        </div>
+        <span>A touch of Lemon</span>
+      </div>
+
+     
+
+    </div>
+
+    <div class="special">
+      <h2>What’s Special About This Drink?</h2>
+      <p>
+        Wheatgrass is known for its fresh, earthy character and has been valued in natural wellness 
+        traditions for its revitalizing qualities. Harvested while the plant is young and nutrient-dense, 
+        wheatgrass delivers a concentrated green boost in a small serving.
+      </p>
+      <p>
+        Shake & Gulp Wheatgrass Shot makes it easy to include this fresh green ritual in your modern 
+        routine. Clean, simple, and refreshing, it’s designed to be shaken well before drinking so you 
+        get the full goodness in every sip.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="info container">
+
+  <div class="info-block">
+    <h3>Health Benefits</h3>
+    <ul class="tick-list two-column">
+      <li>Supports natural detox processes</li>
+      <li>Helps refresh and energize the body</li>
+      <li>Provides a concentrated green nutrient boost</li>
+      <li>Supports overall vitality</li>
+      <li>A light, refreshing addition to daily wellness</li>
+    </ul>
+    <p class="note">A small shot that feels like a fresh start.</p>
+  </div>
+
+  <div class="info-block">
+    <h3>Who Should Drink This?</h3>
+    <p>Wheatgrass Shot can be enjoyed by everyone as part of a balanced wellness routine.</p>
+    <p>It is especially helpful for people who experience:</p>
+   
+    <ul class="tick-list two-column">
+      <li>Low energy or sluggishness</li>
+      <li>A feeling of heaviness from lifestyle habits</li>
+      <li>A desire to support natural cleansing</li>
+      <li>Nutritional gaps in a busy schedule</li>
+      <li>A need for a fresh, plant-based boost</li>
+    </ul>
+
+    <p>A simple green reset for modern lifestyles.</p>
+  </div>
+
+  <div class="info-block">
+    <h3>Emotional Connect</h3>
+    <p>
+      There’s something grounding about green drinks — a reminder of nature, freshness, and 
+      renewal. Wheatgrass has long been part of mindful wellness routines, symbolizing a fresh 
+      start and a return to balance.
+    </p>
+    <p><em>
+      Shake & Gulp Wheatgrass Shot brings that moment of reset into your day — clean, green, 
+      and full of intention.
+    </em></p>
+  </div>
+
+  <div class="info-block">
+    <h3>How to Enjoy</h3>
+    <ul class="tick-list two-column">
+      <li>Shake well before opening</li>
+      <li>Best taken in the morning on an empty stomach or during energy dips</li>
+      <li>Consume as a quick wellness shot</li>
+      <li>Can be followed with a sip of water if preferred</li>
+    </ul>
+    <p><strong>Shake the greens. Gulp the freshness.</strong></p>
+  </div>
+
+</section>
+
+
+<section class="suggest container">
+  <h2 class="center-title">You May Also Like</h2>
+
+  <div class="center-cards">
+    <div class="card">
+      <img src="https://i.ibb.co/GQ08dSY6/Moringa-544x652.png">
+      <p>Moringa Shot</p>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/Nv72jd4/Amla-shadow-elements-544x652.png">
+      <p>Amla Shot</p>
+    </div>
+    <div class="card">
+      <img src="https://i.ibb.co/n8qjj6ZZ/Gingger-shots-544x652.png">
+      <p>Ginger Shot</p>
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container footer-cols">
+    <div>
+      <strong>Shake & Gulp</strong>
+      <p>Traditional Drinks. Honest Ingredients.</p>
+    </div>
+
+    <div>
+      <p>📍 Address</p>
+      <p>📞 Phone</p>
+      <p>✉️ Email</p>
+    </div>
+
+    <div>
+      <p>Quick Links</p>
+      <p>Home</p>
+      <p>Our Drinks</p>
+      <p>Articles</p>
+      <p>Contact</p>
+    </div>
+  </div>
+
+  <p class="copyright">
+    © Shake & Gulp — Shake Well. Gulp Fresh.
+  </p>
+</footer>
+
+</body>
+</html>
