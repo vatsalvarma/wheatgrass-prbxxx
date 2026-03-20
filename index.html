@@ -1,641 +1,723 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wheatgrass Shot – Shake & Gulp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheatgrass Shot – Shake & Gulp</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
+    <style>
 
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #2f3b2f;
+      background: url("https://i.ibb.co/hJR4H2VG/buttermilkbackground.png") no-repeat center center fixed;
+      background-size: cover;
+      line-height: 1.6;
+      padding-top:80px;
+    }
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+      width: 85%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    /* ================= HEADER ================= */
+
+      .navbar{
+        position:fixed;
+        top:20px;
+        left:50%;
+        transform:translateX(-50%);
+
+        width:95%;          /* MUCH WIDER */
+        max-width:none;     /* remove limit */
+
+        padding:16px 70px;  /* more inner spacing */
+        border-radius:50px;
+
+        backdrop-filter:blur(15px);
+        background:rgba(0,0,0,0.08);
+        border:1px solid rgba(0,0,0,0.15);
+
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+
+        color:#000;
+        font-weight:600;
+        letter-spacing:1px;
+        z-index:100;
+    }
+
+    .nav-links{
+        display:flex;
+        gap:35px;
+    }
+
+    .nav-links a{
+        text-decoration:none;
+        color:#000;
+        font-size:14px;
+        transition:0.3s ease;
+    }
+
+    .nav-links a:hover{
+        opacity:0.6;
+    }
+
+    .logo{
+        display:flex;
+        align-items:center;
+        gap:12px; /* space between logo and text */
+    }
+
+    .logo img{
+        width:40px;   /* control logo size */
+        height:auto;
+    }
+
+    /* =============================
+       CONTACT FORM GLASS POPUP
+    ============================= */
+
+    .contact-overlay{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+
+        backdrop-filter:blur(10px);
+        background:rgba(0,0,0,0.3);
+
+        display:flex;
+        justify-content:center;
+        align-items:center;
+
+        z-index:999;
+
+        opacity:0;
+        pointer-events:none;
+        transition:0.4s;
+    }
+
+    .contact-overlay.active{
+        opacity:1;
+        pointer-events:auto;
+    }
+
+    .contact-form{
+        width:400px;
+        padding:40px;
+        border-radius:25px;
+
+        backdrop-filter:blur(15px);
+        background:rgba(255,255,255,0.25);
+        border:1px solid rgba(255,255,255,0.4);
+
+        text-align:center;
+    }
+
+    .contact-form h2{
+        margin-bottom:25px;
+    }
+
+    .contact-form input{
+
+        width:100%;
+        padding:12px;
+        margin-bottom:15px;
+
+        border:none;
+        border-radius:10px;
+    }
+
+    .contact-form textarea{
+        width:100%;
+        height:44px;          /* same height as inputs */
+
+        padding:12px;         /* same padding as inputs */
+        margin-bottom:15px;
+
+        border:none;
+        border-radius:10px;
+        resize:none;
+
+        line-height:20px;     /* centers text visually */
+    }
+
+    .contact-form button{
+        padding:12px 30px;
+        border:none;
+        border-radius:30px;
+        background:black;
+        color:white;
+        cursor:pointer;
+    }
+
+    .close-btn{
+        position:absolute;
+        top:20px;
+        right:25px;
+        border:none;
+        background:none;
+        font-size:22px;
+        cursor:pointer;
+    }
+
+            /* =============================
+       NAVBAR DROPDOWN
+    ============================= */
+
+    .nav-item{
+        position:relative;
+    }
+
+    .dropdown{
+        position:absolute;
+        top:100%;
+        left:0;
+        margin-top:px;
+
+
+        min-width:220px;
+
+        opacity:0;
+        transform:translateY(10px);
+        pointer-events:none;
+
+        transition:0.3s ease;
+    }
+
+    /* =============================
+       NAVBAR DROPDOWN BACKGROUND BLUR
+    ============================= */
+
+    .nav-blur{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+
+        backdrop-filter:blur(12px);
+        background:rgba(0,0,0,0.15);
+
+        opacity:0;
+        pointer-events:none;
+
+        transition:0.3s ease;
+        z-index:50;
+    }
+
+    /* When dropdown is active */
+    body:has(.nav-item:hover) .nav-blur{
+        opacity:1;
+    }
+
+    .nav-item:hover .dropdown{
+        opacity:1;
+        transform:translateY(0);
+        pointer-events:auto;
+    }
+
+    .dropdown a{
+        display:block;
+        padding:8px 10px;
+        font-size:14px;
+        color:#000;
+        text-decoration:none;
+        border-radius:8px;
+        transition:0.25s;
+    }
+
+    .dropdown a:hover{
+        background:rgba(255,255,255,0.4);
+        padding-left:15px;
+    }
+
+
+    /* ================= HERO ================= */
+
+
+
+    .hero-left {
+      width: 45%;
+      display: flex;
+      justify-content: flex-end;   /* pushes image to right */
+      padding-right: 80px;         /* small spacing control */
+    }.hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      padding: 50px 0;
+      min-height: 85vh;
+      transform: translateX(-60px);   /* moves whole hero slightly left */
+    }
+
+
+
+
+    .hero-right {
+      width: 50%;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .bottle {
+      width: 100%;
+      max-width: 280px;       /* slightly smaller */
+    }
+
+    /* ================= TEXT ================= */
+
+    h1 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 48px;        /* slightly reduced but still large */
+      margin-bottom: 12px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #4b5b4b;
+    }
+
+    .small-label {
+      background: #d7e6d6;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* ================= INGREDIENTS ================= */
+
+    .ingredients {
+      display: flex;
+      gap: 20px;              /* reduced spacing */
+      margin: 25px 0;         /* reduced margin */
+      flex-wrap: wrap;
+    }
+
+    .ingredient {
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .ingredient span {
+      display: block;
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.3;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    /* Circle Design */
+
+    .circle {
+      width: 70px;            /* reduced */
+      height: 70px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      transition: all 0.4s ease;
+    }
+
+    .circle img {
+      width: 38px;            /* reduced */
+      transition: transform 0.4s ease;
+    }
+
+    /* Hover Effects */
+
+    .ingredient:hover img {
+      transform: translateY(-6px);
+    }
+
+    .ingredient:hover .circle {
+      box-shadow: 0 15px 35px rgba(92,138,90,0.25);
+      transform: translateY(-4px);
+    }
+
+    /* ================= SPECIAL SECTION ================= */
+
+    .special h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 26px;
+      margin-bottom: 15px;
+    }
+
+    .special p {
+      margin-bottom: 12px;    /* reduced */
+      font-size: 15px;
+      color: #3e4a3e;
+    }
+
+    /* ================= INFO SECTION ================= */
+
+    .info {
+      padding: 70px 0;
+    }
+
+    .info-block {
+      margin-bottom: 50px;
+    }
+
+    .info-block h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 12px 50px;
+    }
+
+    .tick-list {
+      list-style: none;
+    }
+
+    .tick-list li {
+      padding-left: 22px;
+      position: relative;
+      font-size: 14px;
+    }
+
+    .tick-list li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #5c8a5a;
+    }
+
+    /* ================= SUGGEST SECTION ================= */
+
+    .suggest {
+      padding: 70px 0;
+    }
+
+    .center-title {
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 30px;
+      margin-bottom: 35px;
+    }
+
+    .center-cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card img {
+      width: 120px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+       background:black;
+        color:white;
+      padding: 60px 0;
+    }
+
+    .footer-cols {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer strong {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 18px;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    /* ================= ANIMATION ================= */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+        /* =============================
+   HAMBURGER MENU
+============================= */
+
+.hamburger{
+    display:none;
+    font-size:24px;
+    cursor:pointer;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  color: #2f3b2f;
-  background: url("https://i.ibb.co/hJR4H2VG/buttermilkbackground.png") no-repeat center center fixed;
-  background-size: cover;
-  line-height: 1.6;
-  padding-top:80px;
-}
+/* MOBILE MENU */
 
-/* ================= CONTAINER ================= */
-
-.container {
-  width: 85%;
-  max-width: 1100px;
-  margin: auto;
-}
-
-/* ================= HEADER ================= */
-
-  .navbar{
+.mobile-menu{
     position:fixed;
-    top:20px;
+    top:90px;
     left:50%;
     transform:translateX(-50%);
 
-    width:95%;          /* MUCH WIDER */
-    max-width:none;     /* remove limit */
+    width:90%;
+    padding:25px;
 
-    padding:16px 70px;  /* more inner spacing */
-    border-radius:50px;
-
-    backdrop-filter:blur(15px);
-    background:rgba(0,0,0,0.08);
-    border:1px solid rgba(0,0,0,0.15);
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    color:#000;
-    font-weight:600;
-    letter-spacing:1px;
-    z-index:100;
-}
-
-.nav-links{
-    display:flex;
-    gap:35px;
-}
-
-.nav-links a{
-    text-decoration:none;
-    color:#000;
-    font-size:14px;
-    transition:0.3s ease;
-}
-
-.nav-links a:hover{
-    opacity:0.6;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px; /* space between logo and text */
-}
-
-.logo img{
-    width:40px;   /* control logo size */
-    height:auto;
-}
-
-/* =============================
-   CONTACT FORM GLASS POPUP
-============================= */
-
-.contact-overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
-    backdrop-filter:blur(10px);
-    background:rgba(0,0,0,0.3);
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    z-index:999;
-
-    opacity:0;
-    pointer-events:none;
-    transition:0.4s;
-}
-
-.contact-overlay.active{
-    opacity:1;
-    pointer-events:auto;
-}
-
-.contact-form{
-    width:400px;
-    padding:40px;
-    border-radius:25px;
+    border-radius:30px;
 
     backdrop-filter:blur(15px);
     background:rgba(255,255,255,0.25);
     border:1px solid rgba(255,255,255,0.4);
 
+    display:flex;
+    flex-direction:column;
+    gap:18px;
     text-align:center;
-}
 
-.contact-form h2{
-    margin-bottom:25px;
-}
-
-.contact-form input{
-
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-
-    border:none;
-    border-radius:10px;
-}
-
-.contact-form textarea{
-    width:100%;
-    height:44px;          /* same height as inputs */
-
-    padding:12px;         /* same padding as inputs */
-    margin-bottom:15px;
-
-    border:none;
-    border-radius:10px;
-    resize:none;
-
-    line-height:20px;     /* centers text visually */
-}
-
-.contact-form button{
-    padding:12px 30px;
-    border:none;
-    border-radius:30px;
-    background:black;
-    color:white;
-    cursor:pointer;
-}
-
-.close-btn{
-    position:absolute;
-    top:20px;
-    right:25px;
-    border:none;
-    background:none;
-    font-size:22px;
-    cursor:pointer;
-}
-
-        /* =============================
-   NAVBAR DROPDOWN
-============================= */
-
-.nav-item{
-    position:relative;
-}
-
-.dropdown{
-    position:absolute;
-    top:100%;
-    left:0;
-    margin-top:px;
-
-
-    min-width:220px;
-
-    opacity:0;
-    transform:translateY(10px);
-    pointer-events:none;
-
-    transition:0.3s ease;
-}
-
-/* =============================
-   NAVBAR DROPDOWN BACKGROUND BLUR
-============================= */
-
-.nav-blur{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
-    backdrop-filter:blur(12px);
-    background:rgba(0,0,0,0.15);
+    z-index:200;
 
     opacity:0;
     pointer-events:none;
-
-    transition:0.3s ease;
-    z-index:50;
+    transition:0.3s;
 }
 
-/* When dropdown is active */
-body:has(.nav-item:hover) .nav-blur{
-    opacity:1;
+.mobile-menu a{
+    text-decoration:none;
+    color:#000;
+    font-weight:600;
 }
 
-.nav-item:hover .dropdown{
+.mobile-menu.active{
     opacity:1;
-    transform:translateY(0);
     pointer-events:auto;
 }
 
-.dropdown a{
+  /* ================= MOBILE ================= */
+
+  @media(max-width: 900px){
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      min-height: auto;
+    }
+
+    .hero-left,
+    .hero-right {
+      width: 100%;
+    }
+
+    .ingredients {
+      justify-content: center;
+    }
+  }
+
+  /* ================= PRINT ================= */
+
+  @media print {
+
+    body {
+      background: none !important;
+    }
+
+    .container {
+      width: 1100px !important;
+      margin: 0 auto !important;
+    }
+
+    .hero {
+      flex-direction: row !important;
+      min-height: auto;
+    }
+
+    .hero-left,
+    .hero-right {
+      width: 50% !important;
+    }
+
+    .header {
+      position: relative !important;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+
+   .nav-links{
+    display:none;
+}
+
+.hamburger{
     display:block;
-    padding:8px 10px;
+}
+
+    .hero {
+      flex-direction: column;
+      text-align: center;
+      min-height: auto;
+      padding: 40px 0;
+       transform: translateX(-2px); /* adjust 10–40px as needed */
+    }
+
+    .hero-left,
+    .hero-right {
+      width: 100%;
+    }
+
+    .hero-left {
+      justify-content: center;
+      padding-right: 0;
+      margin-bottom: 20px;
+    }
+
+    .bottle {
+      max-width: 260px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+
+    .tagline {
+      font-size: 16px;
+    }
+
+    .ingredients {
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .two-column {
+      grid-template-columns: 1fr;
+    }
+
+    .center-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-cols {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+
+    .hero {
+      padding: 40px 0;
+      gap: 30px;
+    }
+
+    .bottle {
+      max-width: 280px;
+    }
+
+    h1 {
+      font-size: 40px;
+    }
+
+    .ingredients {
+      gap: 20px;
+    }
+
+    .two-column {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+  @media (min-width: 1400px) {
+
+    .container {
+      max-width: 1200px;
+    }
+
+    .bottle {
+      max-width: 350px;
+    }
+
+    h1 {
+      font-size: 52px;
+    }
+  }
+
+        .mobile-dropdown-title{
+    font-weight:600;
+    cursor:pointer;
+}
+
+.mobile-dropdown-links{
+    display:none;
+    flex-direction:column;
+    margin-top:8px;
+    gap:10px;
+}
+
+.mobile-dropdown-links a{
     font-size:14px;
-    color:#000;
-    text-decoration:none;
-    border-radius:8px;
-    transition:0.25s;
+    opacity:0.8;
 }
 
-.dropdown a:hover{
-    background:rgba(255,255,255,0.4);
-    padding-left:15px;
+.mobile-dropdown-links.active{
+    display:flex;
 }
 
 
-/* ================= HERO ================= */
-
-
-
-.hero-left {
-  width: 45%;
-  display: flex;
-  justify-content: flex-end;   /* pushes image to right */
-  padding-right: 80px;         /* small spacing control */
-}.hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 50px;
-  padding: 50px 0;
-  min-height: 85vh;
-  transform: translateX(-60px);   /* moves whole hero slightly left */
-}
-
-
-
-
-.hero-right {
-  width: 50%;
-  animation: fadeUp 0.8s ease forwards;
-}
-
-.bottle {
-  width: 100%;
-  max-width: 280px;       /* slightly smaller */
-}
-
-/* ================= TEXT ================= */
-
-h1 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 48px;        /* slightly reduced but still large */
-  margin-bottom: 12px;
-}
-
-.tagline {
-  font-size: 18px;
-  margin-bottom: 25px;
-  color: #4b5b4b;
-}
-
-.small-label {
-  background: #d7e6d6;
-  padding: 7px 16px;
-  border-radius: 20px;
-  font-size: 12px;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-/* ================= INGREDIENTS ================= */
-
-.ingredients {
-  display: flex;
-  gap: 20px;              /* reduced spacing */
-  margin: 25px 0;         /* reduced margin */
-  flex-wrap: wrap;
-}
-
-.ingredient {
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.ingredient span {
-  display: block;
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.3;
-  white-space: normal;
-  word-break: break-word;
-}
-
-/* Circle Design */
-
-.circle {
-  width: 70px;            /* reduced */
-  height: 70px;
-  background: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-  transition: all 0.4s ease;
-}
-
-.circle img {
-  width: 38px;            /* reduced */
-  transition: transform 0.4s ease;
-}
-
-/* Hover Effects */
-
-.ingredient:hover img {
-  transform: translateY(-6px);
-}
-
-.ingredient:hover .circle {
-  box-shadow: 0 15px 35px rgba(92,138,90,0.25);
-  transform: translateY(-4px);
-}
-
-/* ================= SPECIAL SECTION ================= */
-
-.special h2 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 26px;
-  margin-bottom: 15px;
-}
-
-.special p {
-  margin-bottom: 12px;    /* reduced */
-  font-size: 15px;
-  color: #3e4a3e;
-}
-
-/* ================= INFO SECTION ================= */
-
-.info {
-  padding: 70px 0;
-}
-
-.info-block {
-  margin-bottom: 50px;
-}
-
-.info-block h3 {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.two-column {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px 50px;
-}
-
-.tick-list {
-  list-style: none;
-}
-
-.tick-list li {
-  padding-left: 22px;
-  position: relative;
-  font-size: 14px;
-}
-
-.tick-list li::before {
-  content: "✔";
-  position: absolute;
-  left: 0;
-  color: #5c8a5a;
-}
-
-/* ================= SUGGEST SECTION ================= */
-
-.suggest {
-  padding: 70px 0;
-}
-
-.center-title {
-  text-align: center;
-  font-family: 'Libre Baskerville', serif;
-  font-size: 30px;
-  margin-bottom: 35px;
-}
-
-.center-cards {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.card {
-  background: #fff;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-}
-
-.card img {
-  width: 120px;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* ================= FOOTER ================= */
-
-.footer {
-   background:black;
-    color:white;
-  padding: 60px 0;
-}
-
-.footer-cols {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.footer strong {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 18px;
-}
-
-.copyright {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-/* ================= ANIMATION ================= */
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width: 900px){
-  .hero {
-    flex-direction: column;
-    text-align: center;
-    min-height: auto;
-  }
-
-  .hero-left,
-  .hero-right {
-    width: 100%;
-  }
-
-  .ingredients {
-    justify-content: center;
-  }
-}
-
-/* ================= PRINT ================= */
-
-@media print {
-
-  body {
-    background: none !important;
-  }
-
-  .container {
-    width: 1100px !important;
-    margin: 0 auto !important;
-  }
-
-  .hero {
-    flex-direction: row !important;
-    min-height: auto;
-  }
-
-  .hero-left,
-  .hero-right {
-    width: 50% !important;
-  }
-
-  .header {
-    position: relative !important;
-  }
-}
-
-@page {
-  size: A4;
-  margin: 0;
-}
-@media (max-width: 768px) {
-
-  .hero {
-    flex-direction: column;
-    text-align: center;
-    min-height: auto;
-    padding: 40px 0;
-    transform: translateX(-5px); /* adjust 10–40px as needed */
-  }
-
-  .hero-left,
-  .hero-right {
-    width: 100%;
-  }
-
-  .hero-left {
-    justify-content: center;
-    padding-right: 0;
-    margin-bottom: 20px;
-  }
-
-  .bottle {
-    max-width: 260px;
-  }
-
-  h1 {
-    font-size: 34px;
-  }
-
-  .tagline {
-    font-size: 16px;
-  }
-
-  .ingredients {
-    justify-content: center;
-    gap: 18px;
-  }
-
-  .two-column {
-    grid-template-columns: 1fr;
-  }
-
-  .center-cards {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .footer-cols {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-@media (min-width: 769px) and (max-width: 1024px) {
-
-  .hero {
-    padding: 40px 0;
-    gap: 30px;
-  }
-
-  .bottle {
-    max-width: 280px;
-  }
-
-  h1 {
-    font-size: 40px;
-  }
-
-  .ingredients {
-    gap: 20px;
-  }
-
-  .two-column {
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-@media (min-width: 1400px) {
-
-  .container {
-    max-width: 1200px;
-  }
-
-  .bottle {
-    max-width: 350px;
-  }
-
-  h1 {
-    font-size: 52px;
-  }
-}
-
-  </style>
+    </style>
 </head>
 
 <body>
@@ -645,6 +727,10 @@ h1 {
     <div class="logo">
         <img src="https://i.ibb.co/cSXcmScQ/Shake-Gulp-Logo.png">
         SHAKE & GULP
+    </div>
+
+    <div class="hamburger" onclick="toggleMenu()">
+        ☰
     </div>
 
     <div class="nav-links">
@@ -660,12 +746,11 @@ h1 {
                 <a href="https://vatsalvarma.github.io/Masala-btmlk-prbxx/">Masala Buttermilk</a>
                 <a href="https://vatsalvarma.github.io/Dates-prbxx/">Date Buttermilk</a>
                 <a href="https://vatsalvarma.github.io/ragibrml-prbxxx/">Ragi Buttermilk</a>
-            
                 <a href="https://vatsalvarma.github.io/Sabjalass-prbxs/">Sabja Lassi</a>
                 <a href="https://vatsalvarma.github.io/Sweetbtmlk-prbxx/">Buttermilk</a>
                 <a href="https://vatsalvarma.github.io/Nmpsabja/">Nimbu Sabja</a>
                 <a href="https://vatsalvarma.github.io/Nimpud-prbxx/">Nimbu Pudina</a>
-            
+
             </div>
         </div>
 
@@ -681,7 +766,7 @@ h1 {
                 <a href="https://vatsalvarma.github.io/Moringa-prbxx/">Moringa Shot</a>
                 <a href="https://vatsalvarma.github.io/wheatgrass-prbxxx/">Wheatgrass Shot</a>
                 <a href="https://vatsalvarma.github.io/Barley-prbxx/">Barley Drink</a>
-      
+
             </div>
         </div>
 
@@ -692,171 +777,242 @@ h1 {
 
 </div>
 
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="https://vatsalvarma.github.io/SHAKE-GULP/" onclick="toggleMenu()">Home</a>
+
+    <!-- TRADITIONAL DROPDOWN -->
+    <div class="mobile-dropdown">
+        <div class="mobile-dropdown-title" onclick="toggleMobileDropdown('traditionalList')">
+            Traditional Drinks ⮋
+        </div>
+
+        <div class="mobile-dropdown-links" id="traditionalList">
+
+            <a href="https://vatsalvarma.github.io/Jeerabtmlk-prbxx/">Jeera Buttermilk</a>
+            <a href="https://vatsalvarma.github.io/Masala-btmlk-prbxx/">Masala Buttermilk</a>
+            <a href="https://vatsalvarma.github.io/Dates-prbxx/">Date Buttermilk</a>
+            <a href="https://vatsalvarma.github.io/ragibrml-prbxxx/">Ragi Buttermilk</a>
+            <a href="https://vatsalvarma.github.io/Sabjalass-prbxs/">Sabja Lassi</a>
+            <a href="https://vatsalvarma.github.io/Sweetbtmlk-prbxx/">Buttermilk</a>
+            <a href="https://vatsalvarma.github.io/Nmpsabja/">Nimbu Sabja</a>
+            <a href="https://vatsalvarma.github.io/Nimpud-prbxx/">Nimbu Pudina</a>
+
+        </div>
+    </div>
+
+
+    <!-- WELLNESS DROPDOWN -->
+    <div class="mobile-dropdown">
+
+        <div class="mobile-dropdown-title" onclick="toggleMobileDropdown('wellnessList')">
+            Wellness Drinks ⮋
+        </div>
+
+        <div class="mobile-dropdown-links" id="wellnessList">
+
+            <a href="https://vatsalvarma.github.io/Ginger-prbxx/">Ginger Shot</a>
+            <a href="https://vatsalvarma.github.io/GingTer-prbxx/">Ginger Turmeric</a>
+            <a href="https://vatsalvarma.github.io/Amla-prbrxx/">Amla Shot</a>
+            <a href="https://vatsalvarma.github.io/Neem-prbxx/">Neem Shot</a>
+            <a href="https://vatsalvarma.github.io/Moringa-prbxx/">Moringa Shot</a>
+            <a href="https://vatsalvarma.github.io/wheatgrass-prbxxx/">Wheatgrass Shot</a>
+            <a href="https://vatsalvarma.github.io/Barley-prbxx/">Barley Drink</a>
+
+        </div>
+
+    </div>
+
+    <a href="https://vatsalvarma.github.io/SHAKE-GULP/#read" onclick="toggleMenu()">Read</a>
+    <a href="https://vatsalvarma.github.io/SHAKE-GULP/#" onclick="openContact();toggleMenu()">Contact</a>
+
+</div>
+
 <div class="nav-blur"></div>
 
 
 
 <section class="hero container">
 
-  <div class="hero-left">
-    <img src="https://i.ibb.co/wxcnDn5/Wheat-Grass-544x652.png" class="bottle">
-  </div>
-
-  <div class="hero-right">
-    <h1>Wheatgrass Shot</h1>
-    <p class="tagline">Shake the blades. Gulp the cleanse.</p>
-
-    <span class="small-label">INGREDIENTS</span>
-
-    <div class="ingredients">
-
-      <div class="ingredient water">
-        <div class="circle">
-          <img src="wheatgrass.jpeg">
-          <span class="wave"></span>
-        </div>
-        <span>Fresh Wheatgrass Extract</span>
-      </div>
-
-      <div class="ingredient">
-        <div class="circle">
-          <img src="water.jpeg">
-        </div>
-        <span>Water</span>
-      </div>
-
-      <div class="ingredient">
-        <div class="circle">
-          <img src="lemon2.jpeg">
-        </div>
-        <span>A touch of Lemon</span>
-      </div>
-
-     
-
+    <div class="hero-left">
+        <img src="https://i.ibb.co/wxcnDn5/Wheat-Grass-544x652.png" class="bottle">
     </div>
 
-    <div class="special">
-      <h2>What’s Special About This Drink?</h2>
-      <p>
-        Wheatgrass is known for its fresh, earthy character and has been valued in natural wellness 
-        traditions for its revitalizing qualities. Harvested while the plant is young and nutrient-dense, 
-        wheatgrass delivers a concentrated green boost in a small serving.
-      </p>
-      <p>
-        Shake & Gulp Wheatgrass Shot makes it easy to include this fresh green ritual in your modern 
-        routine. Clean, simple, and refreshing, it’s designed to be shaken well before drinking so you 
-        get the full goodness in every sip.
-      </p>
-    </div>
+    <div class="hero-right">
+        <h1>Wheatgrass Shot</h1>
+        <p class="tagline">Shake the blades. Gulp the cleanse.</p>
 
-  </div>
+        <span class="small-label">INGREDIENTS</span>
+
+        <div class="ingredients">
+
+            <div class="ingredient water">
+                <div class="circle">
+                    <img src="wheatgrass.jpeg">
+                    <span class="wave"></span>
+                </div>
+                <span>Fresh Wheatgrass Extract</span>
+            </div>
+
+            <div class="ingredient">
+                <div class="circle">
+                    <img src="water.jpeg">
+                </div>
+                <span>Water</span>
+            </div>
+
+            <div class="ingredient">
+                <div class="circle">
+                    <img src="lemon2.jpeg">
+                </div>
+                <span>A touch of Lemon</span>
+            </div>
+
+
+
+        </div>
+
+        <div class="special">
+            <h2>What’s Special About This Drink?</h2>
+            <p>
+                Wheatgrass is known for its fresh, earthy character and has been valued in natural wellness
+                traditions for its revitalizing qualities. Harvested while the plant is young and nutrient-dense,
+                wheatgrass delivers a concentrated green boost in a small serving.
+            </p>
+            <p>
+                Shake & Gulp Wheatgrass Shot makes it easy to include this fresh green ritual in your modern
+                routine. Clean, simple, and refreshing, it’s designed to be shaken well before drinking so you
+                get the full goodness in every sip.
+            </p>
+        </div>
+
+    </div>
 </section>
 
 
 <section class="info container">
 
-  <div class="info-block">
-    <h3>Health Benefits</h3>
-    <ul class="tick-list two-column">
-      <li>Supports natural detox processes</li>
-      <li>Helps refresh and energize the body</li>
-      <li>Provides a concentrated green nutrient boost</li>
-      <li>Supports overall vitality</li>
-      <li>A light, refreshing addition to daily wellness</li>
-    </ul>
-    <p class="note">A small shot that feels like a fresh start.</p>
-  </div>
+    <div class="info-block">
+        <h3>Health Benefits</h3>
+        <ul class="tick-list two-column">
+            <li>Supports natural detox processes</li>
+            <li>Helps refresh and energize the body</li>
+            <li>Provides a concentrated green nutrient boost</li>
+            <li>Supports overall vitality</li>
+            <li>A light, refreshing addition to daily wellness</li>
+        </ul>
+        <p class="note">A small shot that feels like a fresh start.</p>
+    </div>
 
-  <div class="info-block">
-    <h3>Who Should Drink This?</h3>
-    <p>Wheatgrass Shot can be enjoyed by everyone as part of a balanced wellness routine.</p>
-    <p>It is especially helpful for people who experience:</p>
-   
-    <ul class="tick-list two-column">
-      <li>Low energy or sluggishness</li>
-      <li>A feeling of heaviness from lifestyle habits</li>
-      <li>A desire to support natural cleansing</li>
-      <li>Nutritional gaps in a busy schedule</li>
-      <li>A need for a fresh, plant-based boost</li>
-    </ul>
+    <div class="info-block">
+        <h3>Who Should Drink This?</h3>
+        <p>Wheatgrass Shot can be enjoyed by everyone as part of a balanced wellness routine.</p>
+        <p>It is especially helpful for people who experience:</p>
 
-    <p>A simple green reset for modern lifestyles.</p>
-  </div>
+        <ul class="tick-list two-column">
+            <li>Low energy or sluggishness</li>
+            <li>A feeling of heaviness from lifestyle habits</li>
+            <li>A desire to support natural cleansing</li>
+            <li>Nutritional gaps in a busy schedule</li>
+            <li>A need for a fresh, plant-based boost</li>
+        </ul>
 
-  <div class="info-block">
-    <h3>Emotional Connect</h3>
-    <p>
-      There’s something grounding about green drinks — a reminder of nature, freshness, and 
-      renewal. Wheatgrass has long been part of mindful wellness routines, symbolizing a fresh 
-      start and a return to balance.
-    </p>
-    <p><em>
-      Shake & Gulp Wheatgrass Shot brings that moment of reset into your day — clean, green, 
-      and full of intention.
-    </em></p>
-  </div>
+        <p>A simple green reset for modern lifestyles.</p>
+    </div>
 
-  <div class="info-block">
-    <h3>How to Enjoy</h3>
-    <ul class="tick-list two-column">
-      <li>Shake well before opening</li>
-      <li>Best taken in the morning on an empty stomach or during energy dips</li>
-      <li>Consume as a quick wellness shot</li>
-      <li>Can be followed with a sip of water if preferred</li>
-    </ul>
-    <p><strong>Shake the greens. Gulp the freshness.</strong></p>
-  </div>
+    <div class="info-block">
+        <h3>Emotional Connect</h3>
+        <p>
+            There’s something grounding about green drinks — a reminder of nature, freshness, and
+            renewal. Wheatgrass has long been part of mindful wellness routines, symbolizing a fresh
+            start and a return to balance.
+        </p>
+        <p><em>
+            Shake & Gulp Wheatgrass Shot brings that moment of reset into your day — clean, green,
+            and full of intention.
+        </em></p>
+    </div>
+
+    <div class="info-block">
+        <h3>How to Enjoy</h3>
+        <ul class="tick-list two-column">
+            <li>Shake well before opening</li>
+            <li>Best taken in the morning on an empty stomach or during energy dips</li>
+            <li>Consume as a quick wellness shot</li>
+            <li>Can be followed with a sip of water if preferred</li>
+        </ul>
+        <p><strong>Shake the greens. Gulp the freshness.</strong></p>
+    </div>
 
 </section>
 
 
 <section class="suggest container">
-  <h2 class="center-title">You May Also Like</h2>
+    <h2 class="center-title">You May Also Like</h2>
 
-  <div class="center-cards" onclick="location.href='https://vatsalvarma.github.io/Moringa-prbxx/'">
-    <div class="card">
-      <img src="https://i.ibb.co/GQ08dSY6/Moringa-544x652.png">
-      <p>Moringa Shot</p>
+    <div class="center-cards" onclick="location.href='https://vatsalvarma.github.io/Moringa-prbxx/'">
+        <div class="card">
+            <img src="https://i.ibb.co/GQ08dSY6/Moringa-544x652.png">
+            <p>Moringa Shot</p>
+        </div>
+        <div class="card" onclick="location.href='https://vatsalvarma.github.io/Amla-prbrxx/'">
+            <img src="https://i.ibb.co/Nv72jd4/Amla-shadow-elements-544x652.png">
+            <p>Amla Shot</p>
+        </div>
+        <div class="card" onclick="location.href='onclick="location.href='https://vatsalvarma.github.io/Masala-btmlk-prbxx/'"'">
+        <img src="https://i.ibb.co/n8qjj6ZZ/Gingger-shots-544x652.png">
+        <p>Ginger Shot</p>
     </div>
-    <div class="card" onclick="location.href='https://vatsalvarma.github.io/Amla-prbrxx/'">
-      <img src="https://i.ibb.co/Nv72jd4/Amla-shadow-elements-544x652.png">
-      <p>Amla Shot</p>
     </div>
-    <div class="card" onclick="location.href='onclick="location.href='https://vatsalvarma.github.io/Masala-btmlk-prbxx/'"'">
-      <img src="https://i.ibb.co/n8qjj6ZZ/Gingger-shots-544x652.png">
-      <p>Ginger Shot</p>
-    </div>
-  </div>
 </section>
 
 
 <footer class="footer">
-  <div class="container footer-cols">
-    <div>
-      <strong>Shake & Gulp</strong>
-      <p>Traditional Drinks. Honest Ingredients.</p>
+    <div class="container footer-cols">
+        <div>
+            <strong>Shake & Gulp</strong>
+            <p>Traditional Drinks. Honest Ingredients.</p>
+        </div>
+
+        <div>
+            <p>📍 Address</p>
+            <p>📞 Phone</p>
+            <p>✉️ Email</p>
+        </div>
+
+        <div>
+            <p>Quick Links</p>
+            <p>Home</p>
+            <p>Traditinal Drinks</p>
+            <p>Wellness Drinks</p>
+            <p>Read</p>
+        </div>
     </div>
 
-    <div>
-      <p>📍 Address</p>
-      <p>📞 Phone</p>
-      <p>✉️ Email</p>
-    </div>
-
-    <div>
-      <p>Quick Links</p>
-      <p>Home</p>
-      <p>Traditinal Drinks</p>
-      <p>Wellness Drinks</p>
-      <p>Read</p>
-    </div>
-  </div>
-
-  <p class="copyright">
-    © Shake & Gulp — Shake Well. Gulp Fresh.
-  </p>
+    <p class="copyright">
+        © Shake & Gulp — Shake Well. Gulp Fresh.
+    </p>
 </footer>
+
+<script>
+
+    function toggleMenu(){
+
+        const menu = document.getElementById("mobileMenu");
+
+        menu.classList.toggle("active");
+
+    }
+
+    function toggleMobileDropdown(id){
+
+    const menu = document.getElementById(id);
+
+    menu.classList.toggle("active");
+
+}
+
+</script>
 
 </body>
 </html>
